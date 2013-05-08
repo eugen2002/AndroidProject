@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <color name="background_color_1">#B0C4DE</color>
+        <color name="background_color_2">#B9D3EE</color>
+        <color name="background_color_3">#C1CDCD</color>
+        <color name="text_listview">#000080</color>
+        <color name="listview_item_1">#D3D3D3</color>
+        <color name="listview_item_2">#BEBEBE</color>
+        <color name="color_text_links">#0000FF</color>
+        <color name="hiperlink_color">#0000CD</color>
+        
+        <!-- #B9D3EE  #C6E2FF -->
+        
+        <!-- ButtonTheme-->
+        <color name="button_color_1">#9FB6CD</color>
+        <color name="button_color_2">#A2B5CD</color>
+        <color name="button_color_3">#9AC0CD</color>
+        <color name="button_color_4">#B9D3EE</color>
+        <color name="button_color_5">#B4CDCD</color>
+        <color name="button_menu_color">#B0C4DE</color>
+        
+</resources>
