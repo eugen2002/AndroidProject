@@ -26,8 +26,13 @@ public class MyListFragment extends Fragment implements OnItemClickListener {
 	Context context;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		context = getActivity();
+		super.onCreate(savedInstanceState);
+	}
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.list, null);
 		if (!isOnline()) {
 			Log.d(LOG_TAG, getString(R.string.check_network_connection));
