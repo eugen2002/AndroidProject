@@ -5,6 +5,9 @@ import java.util.HashMap;
 import ua.newproject.R;
 import ua.newproject.Util;
 import ua.newproject.ui.MyListFragment.setDataListener;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -13,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -37,6 +41,7 @@ public class BaseListActivity extends SlidingFragmentActivity implements setData
 		setBehindContentView(R.layout.activity_menu);
 		initUI();
 	}
+
 
 	public void initUI() {
 		tvTitleItem = (TextView) findViewById(R.id.tvTitleItem);
