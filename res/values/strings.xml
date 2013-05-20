@@ -8,6 +8,8 @@
 	<string name="empty">empty list</string>
 	<string name="content_description">Content Description</string>
 	<string name="test_string">Test string</string>
-	<string name="check_network_connection">No network connection</string>
-	<string name="show_menu">Show menu</string>
+	<string name="network_connection_error">No network connection</string>
+	<string name="button_name_show_menu">Show menu</string>
+	<string name="button_name_update_list">Menu Load/Update</string>
+	<string name="reload_list">Menu Load/\nUpdate</string>
 </resources>

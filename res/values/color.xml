@@ -3,7 +3,10 @@
         <color name="background_color_1">#B0C4DE</color>
         <color name="background_color_2">#B9D3EE</color>
         <color name="background_color_3">#C1CDCD</color>
+        <color name="background_color_4">#4682B4</color>
+        <color name="background_color_5">#838B8B</color>
         <color name="text_listview">#000080</color>
+        <color name="text_color">#000080</color>
         <color name="listview_item_1">#D3D3D3</color>
         <color name="listview_item_2">#BEBEBE</color>
         <color name="color_text_links">#0000FF</color>

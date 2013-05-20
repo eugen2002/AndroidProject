@@ -5,8 +5,8 @@
 	android:orientation="vertical" >
 
 	<fragment
-		android:id="@+id/fragmentList"
-		android:name="ua.newproject.ui.MyListFragment"
+		android:id="@+id/listViewFragment"
+		android:name="ua.newproject.ui.ListViewFragment"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent" >
 	</fragment>

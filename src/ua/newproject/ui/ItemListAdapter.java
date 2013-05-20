@@ -12,24 +12,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class ItemListAdapter extends BaseAdapter {
-	private DisplayImageOptions		options;
-	final String					LOG_TAG	= getClass().getSimpleName();
 
-	private ImageLoader				imageLoader;
-	private final Context			context;
-	private ArrayList<ItemModel>	itemModel;
-
-	public ItemListAdapter(Context context, ArrayList<ItemModel> itemModel) {
-		this.context = context;
-		this.itemModel = itemModel;
-		options = new DisplayImageOptions.Builder().showStubImage(R.drawable.ic_launcher)
-				.cacheInMemory().cacheOnDisc().build();
-	}
+//	private final String			LOG_TAG		= getClass().getSimpleName();
+	private Context					context;
+	private ArrayList<ItemModel>	itemModelArray;
+	private ItemModel				itemModel	= null;
 
 	// For view recycling (optimization for listview)
 	static class ViewHolder {
@@ -38,8 +28,13 @@ public class ItemListAdapter extends BaseAdapter {
 		ImageView	picture;
 	}
 
+	public ItemListAdapter(Context context, ArrayList<ItemModel> itemModel) {
+		this.context = context;
+		this.itemModelArray = itemModel;
+	}
+
 	@Override
-	public View getView(final int position, View convertView, ViewGroup parent) {
+	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = convertView;
 		ViewHolder holder = new ViewHolder();
 		if (convertView == null) {
@@ -57,31 +52,35 @@ public class ItemListAdapter extends BaseAdapter {
 			view.setBackgroundResource(R.color.listview_item_1);
 		}
 
-		ItemModel itemModel = ((ItemModel) getItem(position));
+		itemModel = ((ItemModel) getItem(position));
 
 		if (itemModel != null) {
 			holder = (ViewHolder) view.getTag();
 			holder.tvTitle.setText(itemModel.getTitle());
 			holder.tvBody.setText(itemModel.getBody());
-			imageLoader = ImageLoader.getInstance();
-			imageLoader.init(ImageLoaderConfiguration.createDefault(context));
-			imageLoader.displayImage(itemModel.getPictureURL(), holder.picture, options);
+
+			ImageLoader imageLoader = ImageLoader.getInstance();
+			imageLoader.displayImage(itemModel.getPictureURL(), holder.picture);
 		}
 		return view;
 	}
 
 	@Override
 	public int getCount() {
-		return itemModel.size();
+		return itemModelArray.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return itemModel.get(position);
+		return itemModelArray.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
 		return position;
+	}
+
+	public ArrayList<ItemModel> getItemModelArray() {
+		return itemModelArray;
 	}
 }

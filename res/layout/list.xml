@@ -5,13 +5,46 @@
 	android:background="@color/background_color_2"
 	android:orientation="vertical" >
 
-	<TextView
-		android:layout_width="wrap_content"
+	<LinearLayout
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_gravity="center"
-		android:text="@string/base_menu"
-		android:textSize="@dimen/list_title_text_size" >
-	</TextView>
+		android:baselineAligned="false"
+		android:orientation="horizontal" >
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_weight="0.36"
+			android:gravity="center"
+			android:orientation="horizontal" >
+
+			<TextView
+				style="@style/TextViewTheme"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:text="@string/base_menu"
+				android:textColor="@color/text_color"
+				android:textSize="@dimen/list_title_text_size" />
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.64"
+			android:gravity="center"
+			android:orientation="horizontal" >
+
+			<Button
+				android:id="@+id/btnUpdateList"
+				style="@style/ButtonTheme"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:text="@string/button_name_update_list"
+				android:textColor="@color/text_color" />
+		</LinearLayout>
+	</LinearLayout>
 
 	<ListView
 		android:id="@+id/listView"
@@ -21,6 +54,7 @@
 
 	<TextView
 		android:id="@+id/empty"
+		style="@style/TextViewTheme"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:gravity="center"

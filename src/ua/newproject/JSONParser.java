@@ -10,7 +10,7 @@ import android.util.Log;
 
 public class JSONParser {
 
-	final String					LOG_TAG	= getClass().getSimpleName();
+	private final String			LOG_TAG	= getClass().getSimpleName();
 	private String					info	= "";
 	private ArrayList<JSONObject>	jsArray	= new ArrayList<JSONObject>();
 

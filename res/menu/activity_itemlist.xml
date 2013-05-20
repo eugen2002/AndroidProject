@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+	<item
+		android:id="@+id/reload_list"
+		android:icon="@drawable/ic_action_reload"
+		android:showAsAction="ifRoom|withText"
+		android:title="@string/reload_list"
+		android:titleCondensed="@string/reload_list">
+	</item>
+
+</menu>

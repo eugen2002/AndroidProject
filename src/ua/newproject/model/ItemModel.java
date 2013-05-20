@@ -4,8 +4,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.graphics.Bitmap;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class ItemModel {
+public class ItemModel  implements Parcelable {
 
 	private Integer	id;
 	private String	title;
@@ -17,7 +19,7 @@ public class ItemModel {
 	}
 
 	public ItemModel(int id, String title, String body, String pictureURL, Bitmap picture) {
-		super();
+//		super();
 		this.id = id;
 		this.title = title;
 		this.body = body;
@@ -81,4 +83,36 @@ public class ItemModel {
 		return id.equals(((ItemModel) o).id);
 	}
 
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel parcel, int flags) {
+		parcel.writeInt(id);
+		parcel.writeString(title);
+		parcel.writeString(body);
+		parcel.writeString(pictureURL);
+	}
+
+	public static final Creator<ItemModel>	CREATOR	= 
+			new Parcelable.Creator<ItemModel>() {
+			// распаковываем объект из Parcel
+				public ItemModel createFromParcel(Parcel in) {
+					return new ItemModel(in);
+				}
+				public ItemModel[] newArray(int size) {
+					return new ItemModel[size];
+				}
+			};
+
+	// конструктор, считывающий данные из Parcel
+	private ItemModel(Parcel parcel) {
+		id = parcel.readInt();
+		title = parcel.readString();
+		body = parcel.readString();
+		pictureURL = parcel.readString();
+	}
+	
 }
