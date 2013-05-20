@@ -33,6 +33,7 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 	private String			title		= "";
 	private String			body		= "";
 	private String			address		= "";
+	private int				position	= 0;
 
 	private ImageView		imageItem	= null;
 	private SlidingMenu		slidingMenu	= null;
@@ -68,7 +69,7 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 		imageItem = (ImageView) findViewById(R.id.imageItem);
 		slidingMenu = getSlidingMenu();
 		slidingMenu.setBehindOffset(getDisplayWidth() / 3);
-		btnShowMenu = (Button) findViewById(R.id.btnShowMenu);
+		btnShowMenu = (Button) findViewById(R.id.btnShowList);
 		btnShowMenu.setOnClickListener(this);
 	}
 
@@ -90,13 +91,15 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 		Log.d(LOG_TAG, "SetData");
 		slidingMenu.showContent();
 
-		int position = 0;
 		if (pos == null) {
 			return;
 		} else {
 			position = pos;
 		}
+		updateDetails(position);
+	}
 
+	private void updateDetails(int position) {
 		Object objectResult = new Util().getStringHashMap(position);
 		String stringResult = objectResult.toString();
 
@@ -112,6 +115,16 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 			body = stringMap.get(Constants.BODY);
 			address = stringMap.get(Constants.ADDRESS);
 
+			if (title.equals("")) {
+				tvTitleItem.setText(Constants.EMPTY_MESSAGE);
+			}
+			if (body.equals("")) {
+				tvTitleItem.setText(Constants.EMPTY_MESSAGE);
+			}
+			if (address.equals("")) {
+				tvTitleItem.setText(Constants.EMPTY_MESSAGE);
+			}
+
 			Log.d(LOG_TAG, "String stringMap = " + title);
 			tvTitleItem.setText("title : " + title);
 			tvBodyItem.setText("body : " + body);
@@ -126,6 +139,7 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 						}
 					});
 		}
+
 	}
 
 	private void getToast(String message) {
@@ -145,7 +159,6 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 		super.onSaveInstanceState(outState);
 	}
 
-// not working yet
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getSupportMenuInflater();
@@ -157,9 +170,11 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.reload_list:
-				ListViewFragment fragment = (ListViewFragment) getSupportFragmentManager()
-						.findFragmentById(R.id.listViewFragment);
-				fragment.updateList();
+				if (position == 0) {
+					getToast(Constants.DOWNLOAD_MESSAGE);
+				} else {
+					updateDetails(position);
+				}
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

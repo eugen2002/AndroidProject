@@ -18,12 +18,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 
-public class ListViewFragment extends SherlockFragment implements OnItemClickListener, OnClickListener {
+public class ListViewFragment extends SherlockFragment implements OnItemClickListener,
+		OnClickListener {
 
 	private final String			LOG_TAG			= getClass().getSimpleName();
 
@@ -33,6 +35,7 @@ public class ListViewFragment extends SherlockFragment implements OnItemClickLis
 	private Bundle					bundle			= null;
 	private ListView				listView		= null;
 	private View					v				= null;
+	private TextView				menuTitle		= null;
 
 	public ArrayList<ItemModel> getItemModelArray() {
 		return itemModelArray;
@@ -62,6 +65,7 @@ public class ListViewFragment extends SherlockFragment implements OnItemClickLis
 		View view = inflater.inflate(R.layout.list, null);
 		view.findViewById(R.id.btnUpdateList).setOnClickListener(this);
 		v = view;
+
 		if (savedInstanceState != null) {
 			updateList();
 		}
@@ -89,6 +93,12 @@ public class ListViewFragment extends SherlockFragment implements OnItemClickLis
 		itemListAdapter = new ItemListAdapter(context, itemModelArray);
 		listView.setAdapter(itemListAdapter);
 		listView.setOnItemClickListener(this);
+		menuTitle = (TextView) v.findViewById(R.id.titleMenu);
+		if (itemListAdapter.isEmpty() || itemListAdapter == null){
+			menuTitle.setText(getString(R.string.list_empty_title));
+		}else{
+			menuTitle.setText(getString(R.string.list_title));
+		}
 	}
 
 	public void getToast(String message) {
@@ -124,5 +134,4 @@ public class ListViewFragment extends SherlockFragment implements OnItemClickLis
 			updateList();
 		}
 	}
-
 }

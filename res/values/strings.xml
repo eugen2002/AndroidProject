@@ -4,12 +4,12 @@
 	<string name="app_name">YalantisAndroidProject</string>
 	<string name="action_settings">Settings</string>
 	<string name="hello_world">Hello world!</string>
-	<string name="base_menu">Menu</string>
-	<string name="empty">empty list</string>
+	<string name="list_title">List</string>
+	<string name="list_empty_title">List is empty</string>
 	<string name="content_description">Content Description</string>
 	<string name="test_string">Test string</string>
 	<string name="network_connection_error">No network connection</string>
-	<string name="button_name_show_menu">Show menu</string>
-	<string name="button_name_update_list">Menu Load/Update</string>
-	<string name="reload_list">Menu Load/\nUpdate</string>
+	<string name="button_name_show_list">Show list</string>
+	<string name="button_name_update_list">List Load/Update</string>
+	<string name="update_details">Update\ndetails</string>
 </resources>
