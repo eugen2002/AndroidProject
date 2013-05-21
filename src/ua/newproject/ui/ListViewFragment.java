@@ -21,7 +21,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 
 public class ListViewFragment extends SherlockFragment implements OnItemClickListener,
@@ -32,9 +31,7 @@ public class ListViewFragment extends SherlockFragment implements OnItemClickLis
 	private ArrayList<ItemModel>	itemModelArray	= new ArrayList<ItemModel>();
 	private ItemListAdapter			itemListAdapter	= null;
 	private Context					context			= null;
-	private Bundle					bundle			= null;
 	private ListView				listView		= null;
-	private View					v				= null;
 	private TextView				menuTitle		= null;
 
 	public ArrayList<ItemModel> getItemModelArray() {
@@ -64,10 +61,18 @@ public class ListViewFragment extends SherlockFragment implements OnItemClickLis
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.list, null);
 		view.findViewById(R.id.btnUpdateList).setOnClickListener(this);
-		v = view;
-
+		listView = (ListView) view.findViewById(R.id.listView);
 		if (savedInstanceState != null) {
-			updateList();
+			itemModelArray = savedInstanceState.getParcelableArrayList(Constants.ARRAY_LIST);
+			if (itemModelArray != null && itemModelArray.size() == 0) {
+				Log.d(LOG_TAG, "itemModelArray = " + itemModelArray.toString());
+				itemListAdapter = new ItemListAdapter(context, itemModelArray);
+				listView.setAdapter(itemListAdapter);
+				listView.setOnItemClickListener(this);
+				menuTitle = (TextView) view.findViewById(R.id.titleMenu);
+			}
+		} else {
+			return view;
 		}
 		return view;
 	}
@@ -75,28 +80,18 @@ public class ListViewFragment extends SherlockFragment implements OnItemClickLis
 	@SuppressWarnings("unchecked")
 	public void updateList() {
 
-		listView = (ListView) v.findViewById(R.id.listView);
-		if (bundle == null) {
-			Object objectResult = new Util().getItemModelArray(context);
-			String stringResult = objectResult.toString();
-			if (stringResult.equals(Constants.NETWORK_CONNECTION_ERROR)) {
-
-				Log.d(LOG_TAG, Constants.NETWORK_CONNECTION_ERROR);
-				getToast(Constants.NETWORK_CONNECTION_ERROR);
-			} else {
-				Log.d(LOG_TAG, "savedInstanceState = null " + itemModelArray.size());
-				itemModelArray = (ArrayList<ItemModel>) objectResult;
-			}
+		Object objectResult = new Util().getItemModelArray(context);
+		String stringResult = objectResult.toString();
+		if (stringResult.equals(Constants.NETWORK_CONNECTION_ERROR)) {
+			Log.d(LOG_TAG, Constants.NETWORK_CONNECTION_ERROR);
+			getToast(Constants.NETWORK_CONNECTION_ERROR);
 		} else {
-			itemModelArray = bundle.getParcelableArrayList(Constants.ARRAY_LIST);
+			Log.d(LOG_TAG, "savedInstanceState = null " + itemModelArray.size());
+			itemModelArray = (ArrayList<ItemModel>) objectResult;
 		}
-		itemListAdapter = new ItemListAdapter(context, itemModelArray);
-		listView.setAdapter(itemListAdapter);
-		listView.setOnItemClickListener(this);
-		menuTitle = (TextView) v.findViewById(R.id.titleMenu);
-		if (itemListAdapter.isEmpty() || itemListAdapter == null){
+		if (itemListAdapter.isEmpty() || itemListAdapter == null) {
 			menuTitle.setText(getString(R.string.list_empty_title));
-		}else{
+		} else {
 			menuTitle.setText(getString(R.string.list_title));
 		}
 	}

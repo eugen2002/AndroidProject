@@ -8,20 +8,18 @@ import ua.newproject.Util;
 import ua.newproject.ui.ListViewFragment.setDataListener;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import com.slidingmenu.lib.SlidingMenu;
 
@@ -55,10 +53,18 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 			address = savedInstanceState.getString(Constants.ADDRESS);
 			picture = savedInstanceState.getParcelable(Constants.PICTURE);
 
-			tvTitleItem.setText("title : " + title);
-			tvBodyItem.setText("body : " + body);
-			tvAddressItem.setText("address : " + address);
-			imageItem.setImageBitmap(picture);
+			if (!title.equals("")) {
+				tvTitleItem.setText("title : " + title);
+			}
+			if (!body.equals("")) {
+				tvBodyItem.setText("body : " + body);
+			}
+			if (!address.equals("")) {
+				tvAddressItem.setText("address : " + address);
+			}
+			if (picture != null) {
+				imageItem.setImageBitmap(picture);
+			}
 		}
 	}
 
@@ -71,13 +77,6 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 		slidingMenu.setBehindOffset(getDisplayWidth() / 3);
 		btnShowMenu = (Button) findViewById(R.id.btnShowList);
 		btnShowMenu.setOnClickListener(this);
-	}
-
-	private int getDisplayWidth() {
-		DisplayMetrics metrics = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		Log.d(LOG_TAG, "resolution: " + metrics.widthPixels + " x " + metrics.heightPixels);
-		return metrics.widthPixels;
 	}
 
 	@Override
@@ -115,21 +114,10 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 			body = stringMap.get(Constants.BODY);
 			address = stringMap.get(Constants.ADDRESS);
 
-			if (title.equals("")) {
-				tvTitleItem.setText(Constants.EMPTY_MESSAGE);
-			}
-			if (body.equals("")) {
-				tvTitleItem.setText(Constants.EMPTY_MESSAGE);
-			}
-			if (address.equals("")) {
-				tvTitleItem.setText(Constants.EMPTY_MESSAGE);
-			}
-
 			Log.d(LOG_TAG, "String stringMap = " + title);
 			tvTitleItem.setText("title : " + title);
 			tvBodyItem.setText("body : " + body);
 			tvAddressItem.setText("address : " + address);
-			// load image file
 			imageLoader.displayImage(stringMap.get(Constants.PICTURE_URL), imageItem,
 					new SimpleImageLoadingListener() {
 
@@ -140,12 +128,6 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 					});
 		}
 
-	}
-
-	private void getToast(String message) {
-		Toast toast = Toast.makeText(BaseListActivity.this, message, Toast.LENGTH_LONG);
-		toast.setGravity(Gravity.CENTER, 0, 0);
-		toast.show();
 	}
 
 	@Override
@@ -162,7 +144,7 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getSupportMenuInflater();
-		inflater.inflate(R.menu.activity_itemlist, menu);
+		inflater.inflate(R.menu.menu, menu);
 		return true;
 	}
 

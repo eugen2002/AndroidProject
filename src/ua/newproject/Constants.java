@@ -22,7 +22,6 @@ public final class Constants {
 	public static final String	PICTURE						= "picture";
 	public static final String	PICTURE_URL					= "pictureURL";
 	public static final String	ARRAY_LIST					= "list";
-	public static final String	EMPTY_MESSAGE				= "No data, try to update";
 	public static final String	DOWNLOAD_MESSAGE			= "First you need to download the list\n"
 																	+ "and click on one of his items";
 }
