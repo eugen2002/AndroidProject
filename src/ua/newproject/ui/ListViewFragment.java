@@ -42,6 +42,7 @@ public class ListViewFragment extends SherlockFragment implements OnItemClickLis
 	public void onSaveInstanceState(Bundle outState) {
 
 		if (itemModelArray != null) {
+			
 			outState.putParcelableArrayList(Constants.ARRAY_LIST, itemModelArray);
 		}
 		super.onSaveInstanceState(outState);
@@ -49,27 +50,28 @@ public class ListViewFragment extends SherlockFragment implements OnItemClickLis
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		
 		if (savedInstanceState != null) {
 			Log.d(LOG_TAG, "savedInstanceState != null");
 			itemModelArray = savedInstanceState.getParcelableArrayList(Constants.ARRAY_LIST);
 		}
-		context = getActivity();
+		context = getSherlockActivity();
 		super.onCreate(savedInstanceState);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		
 		View view = inflater.inflate(R.layout.list, null);
 		view.findViewById(R.id.btnUpdateList).setOnClickListener(this);
 		listView = (ListView) view.findViewById(R.id.listView);
+		menuTitle = (TextView) view.findViewById(R.id.titleMenu);
 		if (savedInstanceState != null) {
 			itemModelArray = savedInstanceState.getParcelableArrayList(Constants.ARRAY_LIST);
-			if (itemModelArray != null && itemModelArray.size() == 0) {
-				Log.d(LOG_TAG, "itemModelArray = " + itemModelArray.toString());
-				itemListAdapter = new ItemListAdapter(context, itemModelArray);
-				listView.setAdapter(itemListAdapter);
-				listView.setOnItemClickListener(this);
-				menuTitle = (TextView) view.findViewById(R.id.titleMenu);
+			Log.d(LOG_TAG, "itemModelArray from savedInstanceState = " + itemModelArray.size());
+			if (itemModelArray != null && itemModelArray.size() != 0) {
+				fillListView();
+				checkListTitle();
 			}
 		} else {
 			return view;
@@ -78,25 +80,39 @@ public class ListViewFragment extends SherlockFragment implements OnItemClickLis
 	}
 
 	@SuppressWarnings("unchecked")
-	public void updateList() {
+	public void listLoad() {
 
 		Object objectResult = new Util().getItemModelArray(context);
 		String stringResult = objectResult.toString();
 		if (stringResult.equals(Constants.NETWORK_CONNECTION_ERROR)) {
 			Log.d(LOG_TAG, Constants.NETWORK_CONNECTION_ERROR);
 			getToast(Constants.NETWORK_CONNECTION_ERROR);
-		} else {
-			Log.d(LOG_TAG, "savedInstanceState = null " + itemModelArray.size());
-			itemModelArray = (ArrayList<ItemModel>) objectResult;
+			return;
 		}
-		if (itemListAdapter.isEmpty() || itemListAdapter == null) {
+		Log.d(LOG_TAG, "itemModelArray.size " + itemModelArray.size());
+		itemModelArray = (ArrayList<ItemModel>) objectResult;
+		fillListView();
+		checkListTitle();
+	}
+
+	public void checkListTitle() {
+
+		if (itemListAdapter == null) {
 			menuTitle.setText(getString(R.string.list_empty_title));
 		} else {
 			menuTitle.setText(getString(R.string.list_title));
 		}
 	}
 
+	public void fillListView() {
+
+		itemListAdapter = new ItemListAdapter(context, itemModelArray);
+		listView.setAdapter(itemListAdapter);
+		listView.setOnItemClickListener(this);
+	}
+
 	public void getToast(String message) {
+
 		Toast toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
 		toast.setGravity(Gravity.CENTER, 0, 0);
 		toast.show();
@@ -104,10 +120,12 @@ public class ListViewFragment extends SherlockFragment implements OnItemClickLis
 
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
 		setDataListener.setData(position + 1);
 	}
 
 	public interface setDataListener {
+
 		public void setData(Integer value);
 	}
 
@@ -115,6 +133,7 @@ public class ListViewFragment extends SherlockFragment implements OnItemClickLis
 
 	@Override
 	public void onAttach(Activity activity) {
+
 		super.onAttach(activity);
 		try {
 			setDataListener = (setDataListener) activity;
@@ -125,8 +144,9 @@ public class ListViewFragment extends SherlockFragment implements OnItemClickLis
 
 	@Override
 	public void onClick(View v) {
+
 		if (v.getId() == R.id.btnUpdateList) {
-			updateList();
+			listLoad();
 		}
 	}
 }

@@ -40,6 +40,7 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		Log.d(LOG_TAG, "onCreate");
@@ -69,6 +70,7 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 	}
 
 	private void initUI() {
+		
 		tvTitleItem = (TextView) findViewById(R.id.tvTitleItem);
 		tvBodyItem = (TextView) findViewById(R.id.tvBodyItem);
 		tvAddressItem = (TextView) findViewById(R.id.tvAddressItem);
@@ -81,12 +83,14 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 
 	@Override
 	public void onClick(View v) {
+		
 		Log.d(LOG_TAG, "showMenu");
 		slidingMenu.showMenu();
 	}
 
 	@Override
 	public void setData(Integer pos) {
+		
 		Log.d(LOG_TAG, "SetData");
 		slidingMenu.showContent();
 
@@ -99,6 +103,7 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 	}
 
 	private void updateDetails(int position) {
+		
 		Object objectResult = new Util().getStringHashMap(position);
 		String stringResult = objectResult.toString();
 
@@ -143,6 +148,7 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		
 		MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.menu, menu);
 		return true;
@@ -150,6 +156,7 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		
 		switch (item.getItemId()) {
 			case R.id.reload_list:
 				if (position == 0) {
