@@ -29,9 +29,9 @@ public class BaseApplication extends Application {
 				.build();
 
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
-				.threadPriority(Thread.NORM_PRIORITY - 2)
+//				.threadPriority(Thread.NORM_PRIORITY - 2)
 				.memoryCache(new LruMemoryCache(2 * 1024 * 1024))
-				.denyCacheImageMultipleSizesInMemory()
+//				.denyCacheImageMultipleSizesInMemory()
 				.defaultDisplayImageOptions(options)
 				.build();
 		// Initialize ImageLoader with configuration.

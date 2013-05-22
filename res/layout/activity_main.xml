@@ -24,7 +24,7 @@
 			android:id="@+id/imageItem"
 			android:layout_width="@dimen/large_picture_width"
 			android:layout_height="@dimen/large_picture_height"
-			android:gravity="center_horizontal" />
+			android:gravity="center_horizontal"/>
 
 		<TextView
 			android:id="@+id/tvTitleItem"

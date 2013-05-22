@@ -53,7 +53,8 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 			address = savedInstanceState.getString(Constants.ADDRESS);
 			picture = savedInstanceState.getParcelable(Constants.PICTURE);
 			position = savedInstanceState.getInt(Constants.POSITION);
-			
+			Log.d(LOG_TAG, "position = " + position);
+
 			if (!title.equals("")) {
 				tvTitleItem.setText("title : " + title);
 			}
@@ -65,14 +66,20 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 			}
 			if (picture != null) {
 				imageItem.setImageBitmap(picture);
-			} else {
-				if (position != 0) {
-					Log.d(LOG_TAG, "position = " + position);
-					imageItem.setImageBitmap(BitmapFactory.decodeResource(getResources(),
-							R.drawable.ic_launcher));
-				}
 			}
 		}
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		outState.putInt(Constants.POSITION, position);
+		outState.putString(Constants.TITLE, title);
+		outState.putString(Constants.BODY, body);
+		outState.putString(Constants.ADDRESS, address);
+		if (picture != null) {
+			outState.putParcelable(Constants.PICTURE, picture);
+		}
+		super.onSaveInstanceState(outState);
 	}
 
 	private void initUI() {
@@ -138,19 +145,9 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 						}
 					});
 		}
-
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-
-		outState.putInt(Constants.POSITION, position);
-		outState.putString(Constants.TITLE, title);
-		outState.putString(Constants.BODY, body);
-		outState.putString(Constants.ADDRESS, address);
-		outState.putParcelable(Constants.PICTURE, picture);
-
-		super.onSaveInstanceState(outState);
+		if (picture != null) {
+			picture = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+		}
 	}
 
 	@Override
