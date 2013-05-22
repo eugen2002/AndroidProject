@@ -10,20 +10,19 @@ import org.json.JSONObject;
 
 import ua.newproject.model.ItemModel;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.Log;
 
 public class Util {
 
-	private MyTask			mTask	= null;
-	private final String	LOG_TAG	= getClass().getSimpleName();
+	private static MyTask			mTask	= null;
+	private final static String	LOG_TAG	= "Util";
 
-	public void runTask(String url) {
+	public static void runTask(String url) {
 		mTask = new MyTask();
 		mTask.execute(url);
 	}
 
-	public Object getResponseObject() {
+	public static Object getResponseObject() {
 
 		if (mTask == null) {
 			Log.d(LOG_TAG, "mTask is null");
@@ -42,7 +41,7 @@ public class Util {
 
 	public Object getItemModelArray(Context context) {
 		ArrayList<ItemModel> itemModelArray = new ArrayList<ItemModel>();
-		runTask(Constants.BASE_URL);
+		runTask(Constants.BASE_URL + "/test/");
 		Object responseObject = getResponseObject();
 		String responseString = responseObject.toString();
 		if (responseString.equals(Constants.NETWORK_CONNECTION_ERROR)) {
@@ -69,30 +68,9 @@ public class Util {
 			return itemModelArray;
 		}
 	}
-	private ArrayList<Bitmap> bitmapArray = new ArrayList<Bitmap>();
 
-	public ArrayList<Bitmap> getBitmapArray() {
-		return bitmapArray;
-	}
-
-	public String getString(String data, int position) {
-		String url = Constants.BASE_URL + "?id=" + position;
-		runTask(url);
-		Object object = getResponseObject();
-		// Log.d(LOG_TAG, "object = " + object.toString() + "\n"
-		// + url);
-		String strResponse = (String) object;
-		JSONParser parser = new JSONParser();
-		JSONObject jsonObject = parser.createJsonObject(strResponse);
-		JSONObject jsonObjectIn = parser.getJSONObjectFromJSONObject(jsonObject, "data");
-		String str = parser.getString(jsonObjectIn, data);
-		Log.d(LOG_TAG, "str= " + str);
-
-		return str;
-	}
-
-	public Object getStringHashMap(int position) {
-		String url = Constants.BASE_URL + "?id=" + position;
+	public static Object getStringHashMap(int position) {
+		String url = Constants.BASE_URL + "/test/?id=" + position;
 		runTask(url);
 		Object responseObject = getResponseObject();
 		String responseString = responseObject.toString();

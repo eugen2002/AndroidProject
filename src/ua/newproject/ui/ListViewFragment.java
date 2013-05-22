@@ -80,7 +80,7 @@ public class ListViewFragment extends SherlockFragment implements OnItemClickLis
 	}
 
 	@SuppressWarnings("unchecked")
-	public void listLoad() {
+	private void listLoad() {
 
 		Object objectResult = new Util().getItemModelArray(context);
 		String stringResult = objectResult.toString();
@@ -95,7 +95,7 @@ public class ListViewFragment extends SherlockFragment implements OnItemClickLis
 		checkListTitle();
 	}
 
-	public void checkListTitle() {
+	private void checkListTitle() {
 
 		if (itemListAdapter == null) {
 			menuTitle.setText(getString(R.string.list_empty_title));
@@ -104,14 +104,15 @@ public class ListViewFragment extends SherlockFragment implements OnItemClickLis
 		}
 	}
 
-	public void fillListView() {
+	private void fillListView() {
 
 		itemListAdapter = new ItemListAdapter(context, itemModelArray);
 		listView.setAdapter(itemListAdapter);
 		listView.setOnItemClickListener(this);
+		itemListAdapter.notifyDataSetChanged();
 	}
 
-	public void getToast(String message) {
+	private void getToast(String message) {
 
 		Toast toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
 		toast.setGravity(Gravity.CENTER, 0, 0);
@@ -124,7 +125,7 @@ public class ListViewFragment extends SherlockFragment implements OnItemClickLis
 		setDataListener.setData(position + 1);
 	}
 
-	public interface setDataListener {
+	interface setDataListener {
 
 		public void setData(Integer value);
 	}

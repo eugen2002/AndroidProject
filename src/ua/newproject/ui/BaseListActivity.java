@@ -7,19 +7,18 @@ import ua.newproject.R;
 import ua.newproject.Util;
 import ua.newproject.ui.ListViewFragment.setDataListener;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import com.slidingmenu.lib.SlidingMenu;
 
@@ -40,7 +39,7 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		Log.d(LOG_TAG, "onCreate");
@@ -53,7 +52,8 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 			body = savedInstanceState.getString(Constants.BODY);
 			address = savedInstanceState.getString(Constants.ADDRESS);
 			picture = savedInstanceState.getParcelable(Constants.PICTURE);
-
+			position = savedInstanceState.getInt(Constants.POSITION);
+			
 			if (!title.equals("")) {
 				tvTitleItem.setText("title : " + title);
 			}
@@ -65,12 +65,18 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 			}
 			if (picture != null) {
 				imageItem.setImageBitmap(picture);
+			} else {
+				if (position != 0) {
+					Log.d(LOG_TAG, "position = " + position);
+					imageItem.setImageBitmap(BitmapFactory.decodeResource(getResources(),
+							R.drawable.ic_launcher));
+				}
 			}
 		}
 	}
 
 	private void initUI() {
-		
+
 		tvTitleItem = (TextView) findViewById(R.id.tvTitleItem);
 		tvBodyItem = (TextView) findViewById(R.id.tvBodyItem);
 		tvAddressItem = (TextView) findViewById(R.id.tvAddressItem);
@@ -83,14 +89,14 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 
 	@Override
 	public void onClick(View v) {
-		
+
 		Log.d(LOG_TAG, "showMenu");
 		slidingMenu.showMenu();
 	}
 
 	@Override
 	public void setData(Integer pos) {
-		
+
 		Log.d(LOG_TAG, "SetData");
 		slidingMenu.showContent();
 
@@ -103,8 +109,8 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 	}
 
 	private void updateDetails(int position) {
-		
-		Object objectResult = new Util().getStringHashMap(position);
+
+		Object objectResult = Util.getStringHashMap(position);
 		String stringResult = objectResult.toString();
 
 		if (stringResult.equals(Constants.NETWORK_CONNECTION_ERROR)) {
@@ -113,7 +119,7 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 			return;
 		} else {
 			@SuppressWarnings("unchecked")
-			HashMap<String, String> stringMap = (HashMap<String, String>) new Util()
+			HashMap<String, String> stringMap = (HashMap<String, String>) Util
 					.getStringHashMap(position);
 			title = stringMap.get(Constants.TITLE);
 			body = stringMap.get(Constants.BODY);
@@ -138,6 +144,7 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 
+		outState.putInt(Constants.POSITION, position);
 		outState.putString(Constants.TITLE, title);
 		outState.putString(Constants.BODY, body);
 		outState.putString(Constants.ADDRESS, address);
@@ -148,7 +155,7 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		
+
 		MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.menu, menu);
 		return true;
@@ -156,7 +163,7 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		
+
 		switch (item.getItemId()) {
 			case R.id.reload_list:
 				if (position == 0) {

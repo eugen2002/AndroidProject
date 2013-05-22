@@ -9,22 +9,19 @@ import android.os.Parcelable;
 
 public class ItemModel  implements Parcelable {
 
-	private Integer	id;
+	private int	id;
 	private String	title;
 	private String	body;
 	private String	pictureURL;
-	private Bitmap	picture	= null;
 
 	public ItemModel() {
 	}
 
 	public ItemModel(int id, String title, String body, String pictureURL, Bitmap picture) {
-//		super();
 		this.id = id;
 		this.title = title;
 		this.body = body;
 		this.pictureURL = pictureURL;
-		this.picture = picture;
 	}
 
 	public ItemModel(JSONObject json) throws JSONException {
@@ -62,25 +59,8 @@ public class ItemModel  implements Parcelable {
 		return body;
 	}
 
-	public void setPicture(Bitmap picture) {
-		this.picture = picture;
-	}
-
-	public boolean hasDownloadedPicture() {
-		return picture != null;
-	}
-
-	public Bitmap getPicture() {
-		return picture;
-	}
-
 	public int getID() {
 		return id;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		return id.equals(((ItemModel) o).id);
 	}
 
 	@Override
@@ -98,7 +78,7 @@ public class ItemModel  implements Parcelable {
 
 	public static final Creator<ItemModel>	CREATOR	= 
 			new Parcelable.Creator<ItemModel>() {
-			// распаковываем объект из Parcel
+			// data extract from Parcel
 				public ItemModel createFromParcel(Parcel in) {
 					return new ItemModel(in);
 				}
@@ -107,7 +87,7 @@ public class ItemModel  implements Parcelable {
 				}
 			};
 
-	// конструктор, считывающий данные из Parcel
+	// constructor, data reads from the Parcel
 	private ItemModel(Parcel parcel) {
 		id = parcel.readInt();
 		title = parcel.readString();

@@ -20,6 +20,7 @@ public class ItemListAdapter extends BaseAdapter {
 	private Context					context;
 	private ArrayList<ItemModel>	itemModelArray;
 	private ItemModel				itemModel	= null;
+	private ImageLoader imageLoader = ImageLoader.getInstance();
 
 	// For view recycling (optimization for listview)
 	static class ViewHolder {
@@ -59,7 +60,6 @@ public class ItemListAdapter extends BaseAdapter {
 			holder.tvTitle.setText(itemModel.getTitle());
 			holder.tvBody.setText(itemModel.getBody());
 
-			ImageLoader imageLoader = ImageLoader.getInstance();
 			imageLoader.displayImage(itemModel.getPictureURL(), holder.picture);
 		}
 		return view;

@@ -2,7 +2,7 @@ package ua.newproject;
 
 public final class Constants {
 
-	public final static String	BASE_URL					= "http://apitest.yalantis.com/test/";
+	public final static String	BASE_URL					= "http://apitest.yalantis.com";
 	public static final int		size_Profile_Picture_Width	= 80;
 	public static final int		size_Profile_Picture_Heigth	= 80;
 	public static final int		TIMEOUT_LIMIT				= 2000;
@@ -24,4 +24,5 @@ public final class Constants {
 	public static final String	ARRAY_LIST					= "list";
 	public static final String	DOWNLOAD_MESSAGE			= "First you need to download the list\n"
 																	+ "and click on one of his items";
+	public static final String	POSITION					= "position";
 }
