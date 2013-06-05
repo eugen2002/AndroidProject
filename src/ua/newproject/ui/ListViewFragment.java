@@ -125,9 +125,10 @@ public class ListViewFragment extends SherlockFragment implements OnItemClickLis
 		setDataListener.setData(position + 1);
 	}
 
+	// send position in activity
 	interface setDataListener {
 
-		public void setData(Integer value);
+		public void setData(Integer position);
 	}
 
 	setDataListener	setDataListener;

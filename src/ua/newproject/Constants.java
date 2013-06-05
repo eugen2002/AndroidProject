@@ -25,4 +25,6 @@ public final class Constants {
 	public static final String	DOWNLOAD_MESSAGE			= "First you need to download the list\n"
 																	+ "and click on one of his items";
 	public static final String	POSITION					= "position";
+	
+	// text messages to be moved to R.string
 }

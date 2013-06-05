@@ -14,7 +14,7 @@ public class NetRequest {
 
 	public NetRequest() {
 	}
-
+// later to be replaced by a HTTP-manager
 	public String getResponseString(String URL) {
 		StringBuilder sb = new StringBuilder();
 		try {

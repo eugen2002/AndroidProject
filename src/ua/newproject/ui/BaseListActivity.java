@@ -101,6 +101,7 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 		slidingMenu.showMenu();
 	}
 
+	// get the positions from the fragment
 	@Override
 	public void setData(Integer pos) {
 
@@ -141,7 +142,9 @@ public class BaseListActivity extends BaseActivity implements setDataListener, O
 
 						@Override
 						public void onLoadingComplete(String arg0, View arg1, Bitmap bmp) {
-							picture = bmp;
+							if (bmp != null) {
+								picture = bmp;
+							}
 						}
 					});
 		}

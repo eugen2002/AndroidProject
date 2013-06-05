@@ -25,6 +25,4 @@ public abstract class BaseActivity extends SlidingFragmentActivity {
 		Log.d(LOG_TAG, "resolution: " + metrics.widthPixels + " x " + metrics.heightPixels);
 		return metrics.widthPixels;
 	}
-
-
 }
